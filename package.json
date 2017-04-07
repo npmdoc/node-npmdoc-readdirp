@@ -1,17 +1,40 @@
 {
-    "buildNpmdoc":"readdirp",
+    "author": "kai zhu <kaizhu256@gmail.com>",
+    "buildNpmdoc": "readdirp",
+    "description": "api documentation for [readdirp (v2.1.0)](https://github.com/thlorenz/readdirp) [![npm package](https://img.shields.io/npm/v/npmdoc-readdirp.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-readdirp) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-readdirp.svg)](https://travis-ci.org/npmdoc/node-npmdoc-readdirp)",
     "devDependencies": {
-        "readdirp": "*",
         "electron-lite": "kaizhu256/node-electron-lite#alpha",
+        "readdirp": "*",
         "utility2": "kaizhu256/node-utility2#alpha"
     },
-    "name":"npmdoc-readdirp",
+    "engines": {
+        "node": ">=4.0"
+    },
+    "homepage": "https://github.com/npmdoc/node-npmdoc-readdirp",
+    "keywords": [
+        "documentation",
+        "readdirp"
+    ],
+    "license": "MIT",
+    "main": "lib.npmdoc_readdirp.js",
+    "name": "npmdoc-readdirp",
+    "nameAlias": "npmdoc_readdirp",
+    "nameOriginal": "npmdoc-readdirp",
+    "os": [
+        "darwin",
+        "linux"
+    ],
     "repository": {
         "type": "git",
         "url": "https://github.com/npmdoc/node-npmdoc-readdirp"
     },
     "scripts": {
-        "build-ci": "utility2 shReadmeTest build_ci.sh"
+        "build-ci": "utility2 shReadmeTest build_ci.sh",
+        "env": "env",
+        "heroku-postbuild": "(set -e; npm install \"kaizhu256/node-utility2#alpha\"; utility2 shDeployHeroku)",
+        "postinstall": "if [ -f npm_scripts.sh ]; then ./npm_scripts.sh postinstall; fi",
+        "start": "(set -e; export PORT=${PORT:-8080}; utility2 start test.js)",
+        "test": "(set -e; export PORT=$(utility2 shServerPortRandom); utility2 test test.js)"
     },
     "version": "0.0.1"
 }
