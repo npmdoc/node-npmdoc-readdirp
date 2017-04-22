@@ -61,12 +61,184 @@
 
     <li class="apidocModuleLi"><a href="#apidoc.module.readdirp">module readdirp</a><ol>
 
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.readdirp.readdirp">
+            function <span class="apidocSignatureSpan"></span>readdirp
+            <span class="apidocSignatureSpan">(opts, callback1, callback2)</span>
+            </a>
+
+        </li>
+
     </ol></li>
 
 </ol></div>
 
 <div class="apidocSectionDiv">
 <h1><a href="#apidoc.module.readdirp" id="apidoc.module.readdirp">module readdirp</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.readdirp.readdirp" id="apidoc.element.readdirp.readdirp">
+        function <span class="apidocSignatureSpan"></span>readdirp
+        <span class="apidocSignatureSpan">(opts, callback1, callback2)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function readdir(opts, callback1, callback2) {
+  var stream
+    , handleError
+    , handleFatalError
+    , pending = 0
+    , errors = []
+    , readdirResult = {
+        directories: []
+      , files: []
+    }
+    , fileProcessed
+    , allProcessed
+    , realRoot
+    , aborted = false
+    , paused = false
+    ;
+
+  // If no callbacks were given we will use a streaming interface
+  if (isUndefined(callback1)) {
+    var api          =  require(&#x27;./stream-api&#x27;)();
+    stream           =  api.stream;
+    callback1        =  api.processEntry;
+    callback2        =  api.done;
+    handleError      =  api.handleError;
+    handleFatalError =  api.handleFatalError;
+
+    stream.on(&#x27;close&#x27;, function () { aborted = true; });
+    stream.on(&#x27;pause&#x27;, function () { paused = true; });
+    stream.on(&#x27;resume&#x27;, function () { paused = false; });
+  } else {
+    handleError      =  function (err) { errors.push(err); };
+    handleFatalError =  function (err) {
+      handleError(err);
+      allProcessed(errors, null);
+    };
+  }
+
+  if (isUndefined(opts)){
+    handleFatalError(new Error (
+      &#x27;Need to pass at least one argument: opts! \n&#x27; +
+      &#x27;https://github.com/thlorenz/readdirp#options&#x27;
+      )
+    );
+    return stream;
+  }
+
+  opts.root            =  opts.root            || &#x27;.&#x27;;
+  opts.fileFilter      =  opts.fileFilter      || function() { return true; };
+  opts.directoryFilter =  opts.directoryFilter || function() { return true; };
+  opts.depth           =  typeof opts.depth === &#x27;undefined&#x27; ? 999999999 : opts.depth;
+  opts.entryType       =  opts.entryType       || &#x27;files&#x27;;
+
+  var statfn = opts.lstat === true ? fs.lstat.bind(fs) : fs.stat.bind(fs);
+
+  if (isUndefined(callback2)) {
+    fileProcessed = function() { };
+    allProcessed = callback1;
+  } else {
+    fileProcessed = callback1;
+    allProcessed = callback2;
+  }
+
+  function normalizeFilter (filter) {
+
+    if (isUndefined(filter)) return undefined;
+
+    function isNegated (filters) {
+
+      function negated(f) {
+        return f.indexOf(&#x27;!&#x27;) === 0;
+      }
+
+      var some = filters.some(negated);
+      if (!some) {
+        return false;
+      } else {
+        if (filters.every(negated)) {
+          return true;
+        } else {
+          // if we detect illegal filters, bail out immediately
+          throw new Error(
+            &#x27;Cannot mix negated with non negated glob filters: &#x27; + filters + &#x27;\n&#x27; +
+            &#x27;https://github.com/thlorenz/readdirp#filters&#x27;
+          );
+        }
+      }
+    }
+
+    // Turn all filters into a function
+    if (isFunction(filter)) {
+
+      return filter;
+
+    } else if (isString(filter)) {
+
+      return function (entryInfo) {
+        return minimatch(entryInfo.name, filter.trim());
+      };
+
+    } else if (filter &#x26;&#x26; Array.isArray(filter)) {
+
+      if (filter) filter = filter.map(function (f) {
+        return f.trim();
+      });
+
+      return isNegated(filter) ?
+        // use AND to concat multiple negated filters
+        function (entryInfo) {
+          return filter.every(function (f) {
+            return minimatch(entryInfo.name, f);
+          });
+        }
+        :
+        // use OR to concat multiple inclusive filters
+        function (entryInfo) {
+          return filter.some(function (f) {
+            return minimatch(entryInfo.name, f);
+          });
+        };
+    }
+  }
+
+  function processDir(currentDir, entries, callProcessed) {
+    if (aborted) return;
+    var total = entries.length
+      , processed = 0
+      , entryInfos = []
+      ;
+
+    fs.realpath(currentDir, function(err, realCurrentDir) {
+      if (aborted) return;
+      if (err) {
+        handleError(err);
+        callProcessed(entryInfos);
+        return;
+      }
+
+      var relDir = path.relative(realRoot, realCurrentDir);
+
+      if (entries.length === 0) {
+        callProcessed([]);
+      } else {
+        entries.forEach(function (entry) {
+
+          var fullPath = path.join(realCurrentDir, entry)
+            , relPath  = path.join(relDir, entry);
+
+          statfn(fullPath, function (err, stat) {
+            if (err) {
+              handleError(err);
+            } else { ...</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
 
 </div>
 

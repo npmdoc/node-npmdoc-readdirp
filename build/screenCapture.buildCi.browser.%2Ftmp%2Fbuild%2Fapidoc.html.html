@@ -1,4 +1,4 @@
-<div class="apidocDiv">
+<html><head></head><body><div class="apidocDiv">
 <style>
 /*csslint
 */
@@ -47,17 +47,10 @@
 }
 </style>
 <h1>api documentation for
-    <a
-
-        href="https://github.com/thlorenz/readdirp"
-
-    >readdirp (v2.1.0)</a>
+    <a href="https://github.com/thlorenz/readdirp">readdirp (v2.1.0)</a>
 </h1>
 <h4>Recursive version of fs.readdir with streaming api.</h4>
-<div class="apidocSectionDiv"><a
-    href="#apidoc.tableOfContents"
-    id="apidoc.tableOfContents"
-><h1>table of contents</h1></a><ol>
+<div class="apidocSectionDiv"><a href="#apidoc.tableOfContents" id="apidoc.tableOfContents"><h1>table of contents</h1></a><ol>
 
     <li class="apidocModuleLi"><a href="#apidoc.module.readdirp">module readdirp</a><ol>
 
@@ -104,16 +97,16 @@
 
   // If no callbacks were given we will use a streaming interface
   if (isUndefined(callback1)) {
-    var api          =  require(&#x27;./stream-api&#x27;)();
+    var api          =  require('./stream-api')();
     stream           =  api.stream;
     callback1        =  api.processEntry;
     callback2        =  api.done;
     handleError      =  api.handleError;
     handleFatalError =  api.handleFatalError;
 
-    stream.on(&#x27;close&#x27;, function () { aborted = true; });
-    stream.on(&#x27;pause&#x27;, function () { paused = true; });
-    stream.on(&#x27;resume&#x27;, function () { paused = false; });
+    stream.on('close', function () { aborted = true; });
+    stream.on('pause', function () { paused = true; });
+    stream.on('resume', function () { paused = false; });
   } else {
     handleError      =  function (err) { errors.push(err); };
     handleFatalError =  function (err) {
@@ -124,18 +117,18 @@
 
   if (isUndefined(opts)){
     handleFatalError(new Error (
-      &#x27;Need to pass at least one argument: opts! \n&#x27; +
-      &#x27;https://github.com/thlorenz/readdirp#options&#x27;
+      'Need to pass at least one argument: opts! \n' +
+      'https://github.com/thlorenz/readdirp#options'
       )
     );
     return stream;
   }
 
-  opts.root            =  opts.root            || &#x27;.&#x27;;
+  opts.root            =  opts.root            || '.';
   opts.fileFilter      =  opts.fileFilter      || function() { return true; };
   opts.directoryFilter =  opts.directoryFilter || function() { return true; };
-  opts.depth           =  typeof opts.depth === &#x27;undefined&#x27; ? 999999999 : opts.depth;
-  opts.entryType       =  opts.entryType       || &#x27;files&#x27;;
+  opts.depth           =  typeof opts.depth === 'undefined' ? 999999999 : opts.depth;
+  opts.entryType       =  opts.entryType       || 'files';
 
   var statfn = opts.lstat === true ? fs.lstat.bind(fs) : fs.stat.bind(fs);
 
@@ -154,7 +147,7 @@
     function isNegated (filters) {
 
       function negated(f) {
-        return f.indexOf(&#x27;!&#x27;) === 0;
+        return f.indexOf('!') === 0;
       }
 
       var some = filters.some(negated);
@@ -166,8 +159,8 @@
         } else {
           // if we detect illegal filters, bail out immediately
           throw new Error(
-            &#x27;Cannot mix negated with non negated glob filters: &#x27; + filters + &#x27;\n&#x27; +
-            &#x27;https://github.com/thlorenz/readdirp#filters&#x27;
+            'Cannot mix negated with non negated glob filters: ' + filters + '\n' +
+            'https://github.com/thlorenz/readdirp#filters'
           );
         }
       }
@@ -184,7 +177,7 @@
         return minimatch(entryInfo.name, filter.trim());
       };
 
-    } else if (filter &#x26;&#x26; Array.isArray(filter)) {
+    } else if (filter &amp;&amp; Array.isArray(filter)) {
 
       if (filter) filter = filter.map(function (f) {
         return f.trim();
@@ -248,3 +241,4 @@
     ]
 </div>
 </div>
+</body></html>
