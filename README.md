@@ -1,9 +1,14 @@
-# api documentation for  [readdirp (v2.1.0)](https://github.com/thlorenz/readdirp)  [![npm package](https://img.shields.io/npm/v/npmdoc-readdirp.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-readdirp) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-readdirp.svg)](https://travis-ci.org/npmdoc/node-npmdoc-readdirp)
+# npmdoc-readdirp
+
+#### api documentation for  [readdirp (v2.1.0)](https://github.com/thlorenz/readdirp)  [![npm package](https://img.shields.io/npm/v/npmdoc-readdirp.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-readdirp) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-readdirp.svg)](https://travis-ci.org/npmdoc/node-npmdoc-readdirp)
+
 #### Recursive version of fs.readdir with streaming api.
 
-[![NPM](https://nodei.co/npm/readdirp.png?downloads=true)](https://www.npmjs.com/package/readdirp)
+[![NPM](https://nodei.co/npm/readdirp.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/readdirp)
 
-[![apidoc](https://npmdoc.github.io/node-npmdoc-readdirp/build/screenCapture.buildApidoc.browser.%252Fhome%252Ftravis%252Fbuild%252Fnpmdoc%252Fnode-npmdoc-readdirp%252Ftmp%252Fbuild%252Fapidoc.html.png)](https://npmdoc.github.io/node-npmdoc-readdirp/build/apidoc.html)
+- [https://npmdoc.github.io/node-npmdoc-readdirp/build/apidoc.html](https://npmdoc.github.io/node-npmdoc-readdirp/build/apidoc.html)
+
+[![apidoc](https://npmdoc.github.io/node-npmdoc-readdirp/build/screenCapture.buildCi.browser.%252Ftmp%252Fbuild%252Fapidoc.html.png)](https://npmdoc.github.io/node-npmdoc-readdirp/build/apidoc.html)
 
 ![npmPackageListing](https://npmdoc.github.io/node-npmdoc-readdirp/build/screenCapture.npmPackageListing.svg)
 
@@ -18,7 +23,6 @@
 {
     "author": {
         "name": "Thorsten Lorenz",
-        "email": "thlorenz@gmx.de",
         "url": "thlorenz.com"
     },
     "bugs": {
@@ -61,13 +65,11 @@
     "main": "readdirp.js",
     "maintainers": [
         {
-            "name": "thlorenz",
-            "email": "thlorenz@gmx.de"
+            "name": "thlorenz"
         }
     ],
     "name": "readdirp",
     "optionalDependencies": {},
-    "readme": "ERROR: No README data found!",
     "repository": {
         "type": "git",
         "url": "git://github.com/thlorenz/readdirp.git"
@@ -81,19 +83,10 @@
         "test-all": "npm run test-main && npm run test-0.10 && npm run test-0.12 && npm run test-4 && npm run test-6",
         "test-main": "(cd test && set -e; for t in ./*.js; do node $t; done)"
     },
-    "version": "2.1.0"
+    "version": "2.1.0",
+    "bin": {}
 }
 ```
-
-
-
-# <a name="apidoc.tableOfContents"></a>[table of contents](#apidoc.tableOfContents)
-
-#### [module readdirp](#apidoc.module.readdirp)
-
-
-
-# <a name="apidoc.module.readdirp"></a>[module readdirp](#apidoc.module.readdirp)
 
 
 
